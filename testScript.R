@@ -9,20 +9,20 @@ game_ids <- subset(fgd, season == year)
 
 # Look these up on nhl.com
 first_gameid <- 20001
-last_gameid <- 20173
+last_gameid <- 20182
 
-week_ids <- subset(game_ids, first_gameid <= gcode & last_gameid >= gcode)
+game_ids <- subset(game_ids, first_gameid <= gcode & last_gameid >= gcode)
 
 #download the game info from nhl.com
 dummy <- download.games(games = game_ids, wait=1)
 
 # parse the game info
-process.games(games=week_ids, override.download=FALSE)
+process.games(games=game_ids, override.download=FALSE)
 
 # garbage collection
 gc()
 
-compile.all.games()
+compile.all.games(new.game.table = game_ids)
 
 temp <- load("source-data\\nhlscrapr-20162017.RData")
 events <- get(temp)
@@ -49,7 +49,7 @@ psNEN <- as.data.frame(psNEN[,,1])
 #TOP SHOTS
 ps[ order(-ps[,2]), ]
 ps5v5[ order(-ps5v5[,2]), ]
-
+ps5v5NEN [ order(-ps5v5NEN[,2]), ]
 #TOP GOALS
 ps[ order(-ps[,3]), ]
 ps5v5[ order(-ps5v5[,3]), ]

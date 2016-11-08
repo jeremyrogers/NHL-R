@@ -1,6 +1,6 @@
 get.corsi.for <- function(player_id, events) {
   shots <- subset(events, (etype =="MISS" | etype == "SHOT" | etype == "BLOCK" | etype == "GOAL"))
-  corsi_for <- length(subset(events, (((a1 == player_id | a2 == player_id | a3 == player_id | 
+  corsi_for <- nrow(subset(shots, (((a1 == player_id | a2 == player_id | a3 == player_id | 
                                           a4 == player_id | a5 == player_id | a6 == player_id) 
                                        & ev.team == awayteam) 
                                       | ((h1 == player_id | h2 == player_id | h3 == player_id | 
@@ -13,7 +13,7 @@ get.corsi.for <- function(player_id, events) {
 get.corsi.against <- function(player_id, events) {
   shots <- subset(events, (etype =="MISS" | etype == "SHOT" | etype == "BLOCK" | etype == "GOAL"))
   
-  corsi_against <- length(subset(events, (((a1 == player_id | a2 == player_id | a3 == player_id | 
+  corsi_against <- nrow(subset(shots, (((a1 == player_id | a2 == player_id | a3 == player_id | 
                                               a4 == player_id | a5 == player_id | a6 == player_id) 
                                            & ev.team == hometeam) 
                                           | ((h1 == player_id | h2 == player_id | h3 == player_id | 
@@ -34,7 +34,7 @@ get.corsi <- function(player_id, events) {
 
 get.fenwick.for <- function(player_id, events) {
   shots <- subset(events, (etype =="MISS" | etype == "SHOT" | etype == "GOAL"))
-  fenwick_for <- length(subset(events, (((a1 == player_id | a2 == player_id | a3 == player_id | 
+  fenwick_for <- nrow(subset(shots, (((a1 == player_id | a2 == player_id | a3 == player_id | 
                                           a4 == player_id | a5 == player_id | a6 == player_id) 
                                        & ev.team == awayteam) 
                                       | ((h1 == player_id | h2 == player_id | h3 == player_id | 
@@ -46,7 +46,7 @@ get.fenwick.for <- function(player_id, events) {
 
 get.fenwick.against <- function(player_id, events) {
   shots <- subset(events, (etype =="MISS" | etype == "SHOT" | etype == "GOAL"))
-  fenwick_against <- length(subset(events, (((a1 == player_id | a2 == player_id | a3 == player_id | 
+  fenwick_against <- nrow(subset(shots, (((a1 == player_id | a2 == player_id | a3 == player_id | 
                                             a4 == player_id | a5 == player_id | a6 == player_id) 
                                          & ev.team == hometeam) 
                                         | ((h1 == player_id | h2 == player_id | h3 == player_id | 
