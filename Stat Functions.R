@@ -1,3 +1,30 @@
+get.goals <- function(player_id, events) {
+  nrow(subset(events, (etype == "GOAL" & ev.player.1 == player_id)))
+}
+
+get.assists <- function(player_id, events) {
+  nrow(subset(events, ((etype == "GOAL") & (ev.player.2 == player_id 
+                       | ev.player.3 == player_id))))
+}
+
+get.points <- function(player_id, events) {
+  get.goals(player_id, events) + get.assists(player_id, events)
+}
+
+get.shots <- function(player_id, events) {
+  nrow(subset(events, ((etype == "GOAL" | etype == "SHOT") & ev.player.1 == player_id)))
+}
+
+get.icorsi <- function(player_id, events) {
+  nrow(subset(events, ((etype == "GOAL" | etype == "SHOT" | etype == "BLOCK" | etype == "MISS") 
+                       & ev.player.1 == player_id)))
+}
+
+get.ifenwick <- function(player_id, events) {
+  nrow(subset(events, ((etype == "GOAL" | etype == "SHOT" | etype == "MISS") 
+                       & ev.player.1 == player_id)))
+}
+
 get.corsi.for <- function(player_id, events) {
   shots <- subset(events, (etype =="MISS" | etype == "SHOT" | etype == "BLOCK" | etype == "GOAL"))
   corsi_for <- nrow(subset(shots, (((a1 == player_id | a2 == player_id | a3 == player_id | 
@@ -63,4 +90,15 @@ get.fenwick <- function(player_id, events) {
   fenwick <- fenwick_for - fenwick_against
   fenwick
   
+}
+
+player.table <- function(roster, events) {
+  player <- roster$firstlast
+  position <- roster$pos
+  id <- roster$player.id
+  player.ids <- roster$player.id
+  points <- sapply(roster$player.id, get.points, events = events)
+  goals <- sapply(roster$player.id, get.goals, events = events)
+  assists <- sapply(roster$player.id, get.assists, events = events)
+  full.stats <- data.frame(player, position, id, points, goals, assists)
 }

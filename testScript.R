@@ -9,7 +9,7 @@ game_ids <- subset(fgd, season == year)
 
 # Look these up on nhl.com
 first_gameid <- 20001
-last_gameid <- 20182
+last_gameid <- 20195
 
 game_ids <- subset(game_ids, first_gameid <= gcode & last_gameid >= gcode)
 
